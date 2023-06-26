@@ -46,47 +46,39 @@ class _CartPageState extends State<CartPage> {
                     width: 130,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Image.asset('lib/assets/co1.png'),
+                      child: Image.asset('lib/assets/co4.png'),
                     ),
                   ),
                   Container(
                     width: 180,
-                    alignment: Alignment.centerLeft,
                     child: const Padding(
-                      padding: EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(10.0),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text('Latte'),
+                          Text('Cappucinno',style: TextStyle(fontSize: 25),),
                           Text('with Almond milk'),
-                          Text('\$4.20')
+                          Text('\$4.20',style: TextStyle(fontSize: 20))
                         ],
                       ),
                     ),
                   ),
                   //this column is need to place in the corner
                   Container(
-                    width: 60,
-                    alignment: Alignment.centerRight,
+                    width: 70,
+                    //alignment: Alignment.centerRight,
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        IconButton(
-                          color: Colors.orange,
-                          onPressed: () {
-                            decrementCount();
-                          },
-                          icon: const Icon(Icons.remove),
-                        ),
                         Text(
                           count.toString(),
-                          style: const TextStyle(fontSize: 18),
+                          style: const TextStyle(fontSize: 22),
                         ),
                         IconButton(
                           color: Colors.orange,
-                          onPressed: () {
-                            incrementCount();
-                          },
-                          icon: const Icon(Icons.add),
+                          onPressed: () {},
+                          icon: const Icon(Icons.delete,size: 30),
                         ),
                       ],
                     ),

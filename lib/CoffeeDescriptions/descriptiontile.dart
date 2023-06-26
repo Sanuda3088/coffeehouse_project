@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:coffeehouse_project/globalVariables.dart';
 import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 
@@ -7,7 +9,8 @@ class DescriptionTile extends StatefulWidget {
   final String coffeePrice;
   final String coffeedescription;
 
-  const DescriptionTile({super.key, 
+  const DescriptionTile({
+    super.key,
     required this.coffeeImagePath,
     required this.coffeeName,
     required this.coffeePrice,
@@ -34,6 +37,38 @@ class _DescriptionTileState extends State<DescriptionTile> {
       }
     });
   }
+
+  void placeOrder() async {
+  final CollectionReference orders = FirebaseFirestore.instance.collection('Orders');
+  
+  try {
+    await orders.add({
+      'Name': controllerName,
+      'CoffeeName': widget.coffeeName,
+      'CoffeePrice': widget.coffeePrice,
+      'CoffeeCount': count,
+      'CoffeeImagePath': widget.coffeeImagePath,
+    });
+    
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Order Placed'),
+        content: const Text('Your order has been placed successfully.'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  } catch (error) {
+    print('Error placing order: $error');
+  }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -65,8 +100,8 @@ class _DescriptionTileState extends State<DescriptionTile> {
                   children: [
                     Text(
                       widget.coffeeName,
-                      style:
-                          const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                          fontSize: 22, fontWeight: FontWeight.bold),
                     ),
                     const Text('with Almand Milk'),
                   ],
@@ -109,7 +144,8 @@ class _DescriptionTileState extends State<DescriptionTile> {
                     width: w * 0.3,
                     height: h * 0.15,
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 10, right: 10, top: 20),
+                      padding:
+                          const EdgeInsets.only(left: 10, right: 10, top: 20),
                       child: Column(
                         children: [
                           const Text(
@@ -133,16 +169,18 @@ class _DescriptionTileState extends State<DescriptionTile> {
                     height: h * 0.15,
                     width: w * 0.45,
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 10, right: 10, top: 30, bottom: 30),
+                      padding: const EdgeInsets.only(
+                          left: 10, right: 10, top: 30, bottom: 30),
                       child: ElevatedButton(
                         style: ButtonStyle(
-                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(25),
                             ),
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: placeOrder,
                         child: const Text(
                           'Order',
                           style: TextStyle(
