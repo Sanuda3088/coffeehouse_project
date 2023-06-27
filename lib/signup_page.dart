@@ -12,7 +12,7 @@ class SignupPage extends StatefulWidget {
 
 class _SignupPageState extends State<SignupPage> {
   String? errorMessage = '';
-  final TextEditingController _controllerName = TextEditingController();
+  TextEditingController _controllerName = TextEditingController();
   final TextEditingController _controllerEmail = TextEditingController();
   final TextEditingController _controllerPassword = TextEditingController();
 
@@ -74,7 +74,6 @@ class _SignupPageState extends State<SignupPage> {
                             horizontal: 32, vertical: 8),
                         child: TextField(
                           controller: _controllerName,
-                          obscureText: true,
                           decoration: InputDecoration(
                             hintText: 'Name',
                             prefixIcon: const Icon(Icons.person),

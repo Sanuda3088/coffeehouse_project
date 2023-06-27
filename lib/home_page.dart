@@ -222,13 +222,6 @@ class _HomePageState extends State<HomePage> {
                 ),
               )),
             ]),
-            ElevatedButton(onPressed: () {Navigator.push(
-              context, 
-              MaterialPageRoute(builder: (context) => const Database()),
-             );
-            },
-  child: const Text('Database'),
-)
           ],
         ),
       ),
@@ -236,6 +229,3 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-cartTile() {
-  
-}
