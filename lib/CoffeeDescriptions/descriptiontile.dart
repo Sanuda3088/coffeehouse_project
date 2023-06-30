@@ -1,7 +1,8 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:coffeehouse_project/globalVariables.dart';
 import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
+import 'package:coffeehouse_project/globals.dart'as globals;
 
 class DescriptionTile extends StatefulWidget {
   final String coffeeImagePath;
@@ -10,12 +11,12 @@ class DescriptionTile extends StatefulWidget {
   final String coffeedescription;
 
   const DescriptionTile({
-    super.key,
+    Key? key,
     required this.coffeeImagePath,
     required this.coffeeName,
     required this.coffeePrice,
     required this.coffeedescription,
-  });
+  }) : super(key: key);
 
   @override
   State<DescriptionTile> createState() => _DescriptionTileState();
@@ -38,37 +39,38 @@ class _DescriptionTileState extends State<DescriptionTile> {
     });
   }
 
-  void placeOrder() async {
-  final CollectionReference orders = FirebaseFirestore.instance.collection('Orders');
-  
-  try {
-    await orders.add({
-      'Name': controllerName,
+  void placeOrder() {
+    final CollectionReference orders =
+        FirebaseFirestore.instance.collection('Orders');
+    DateTime now = DateTime.now();
+
+    orders.add({
       'CoffeeName': widget.coffeeName,
       'CoffeePrice': widget.coffeePrice,
       'CoffeeCount': count,
       'CoffeeImagePath': widget.coffeeImagePath,
+      'OrderDate': now,
+      'Name': globals.userName,
+    }).then((_) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Order Placed'),
+          content: const Text('Your order has been placed successfully.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+    }).catchError((error) {
+      print('Error placing order: $error');
     });
-    
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Order Placed'),
-        content: const Text('Your order has been placed successfully.'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: const Text('OK'),
-          ),
-        ],
-      ),
-    );
-  } catch (error) {
-    print('Error placing order: $error');
   }
-}
 
   @override
   Widget build(BuildContext context) {
@@ -84,26 +86,31 @@ class _DescriptionTileState extends State<DescriptionTile> {
               Container(
                 height: h * 0.5,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    image: DecorationImage(
-                        image: AssetImage(widget.coffeeImagePath),
-                        fit: BoxFit.cover)),
+                  borderRadius: BorderRadius.circular(20),
+                  image: DecorationImage(
+                    image: AssetImage(widget.coffeeImagePath),
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
               SizedBox(
                 height: h * 0.05,
               ),
               Container(
                 height: h * 0.1,
-                decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                ),
                 child: Column(
                   children: [
                     Text(
                       widget.coffeeName,
                       style: const TextStyle(
-                          fontSize: 22, fontWeight: FontWeight.bold),
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                    const Text('with Almand Milk'),
+                    const Text('with Almond Milk'),
                   ],
                 ),
               ),
@@ -112,8 +119,9 @@ class _DescriptionTileState extends State<DescriptionTile> {
                 child: Container(
                   alignment: Alignment.topLeft,
                   height: h * 0.13,
-                  decoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
                   child: SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -121,7 +129,9 @@ class _DescriptionTileState extends State<DescriptionTile> {
                         const Text(
                           'Description',
                           style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         ExpandableText(
                           widget.coffeedescription,

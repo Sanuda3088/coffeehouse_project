@@ -1,10 +1,9 @@
-import 'package:coffeehouse_project/CoffeeDescriptions/Tea.dart';
+import 'package:coffeehouse_project/CoffeeDescriptions/tea.dart';
 import 'package:coffeehouse_project/CoffeeDescriptions/black.dart';
 import 'package:coffeehouse_project/CoffeeDescriptions/cappucino.dart';
 import 'package:coffeehouse_project/CoffeeDescriptions/latte.dart';
 import 'package:coffeehouse_project/article_tile.dart';
 import 'package:coffeehouse_project/cart.dart';
-import 'package:coffeehouse_project/database.dart';
 import 'package:coffeehouse_project/welcome_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +29,7 @@ class _HomePageState extends State<HomePage> {
                 Navigator.push(
                  context,
                  MaterialPageRoute<void>(
-                    builder: (BuildContext context) => CartPage(),
+                    builder: (BuildContext context) => const CartPage(),
                  ),
                );
               },
