@@ -1,3 +1,4 @@
+import 'package:coffeehouse_project/home_page.dart';
 import 'package:flutter/material.dart';
 
 class AboutUsPage extends StatelessWidget {
@@ -7,12 +8,27 @@ class AboutUsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: true,
         title: const Text('About Us'),
+        centerTitle: true,
+        leading: IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute<void>(
+                  builder: (BuildContext context) => const HomePage(),
+                ),
+              );
+            },
+            icon: const Icon(Icons.arrow_back)),
       ),
       body: const Column(
         children: [
           SizedBox(
-            child: Image(image: AssetImage('lib/assets/cofh.png'),fit: BoxFit.fill,),
+            child: Image(
+              image: AssetImage('lib/assets/cofh.png'),
+              fit: BoxFit.fill,
+            ),
           ),
           Padding(
             padding: EdgeInsets.all(16.0),
@@ -57,5 +73,3 @@ class AboutUsPage extends StatelessWidget {
     );
   }
 }
-
-
