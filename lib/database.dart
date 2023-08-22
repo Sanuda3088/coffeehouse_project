@@ -39,7 +39,7 @@ class _DatabaseState extends State<Database> {
                   decoration: const InputDecoration(labelText: 'Name'),
                 ),
                 TextField(
-                  keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
                   controller: _ageController,
                   decoration: const InputDecoration(labelText: 'Age'),
                 ),
@@ -90,7 +90,7 @@ class _DatabaseState extends State<Database> {
                   decoration: const InputDecoration(labelText: 'Name'),
                 ),
                 TextField(
-                  keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
                   controller: _ageController,
                   decoration: const InputDecoration(labelText: 'Age'),
                 ),

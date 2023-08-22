@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:coffeehouse_project/payment_page.dart';
 import 'package:flutter/material.dart';
 import 'globals.dart' as globals;
+
 class CartPage extends StatefulWidget {
   const CartPage({Key? key}) : super(key: key);
 
@@ -11,6 +13,17 @@ class CartPage extends StatefulWidget {
 class _CartPageState extends State<CartPage> {
   final CollectionReference orders =
       FirebaseFirestore.instance.collection('Orders');
+
+  double calculateTotalOrderValue(List<DocumentSnapshot> orders) {
+    double totalValue = 0;
+    for (var order in orders) {
+      final coffeePrice = order['CoffeePrice'] as String? ?? '';
+      final coffeeCount = order['CoffeeCount'] as int? ?? 0;
+      final double price = double.tryParse(coffeePrice) ?? 0;
+      totalValue += price * coffeeCount;
+    }
+    return totalValue;
+  }
 
   Future<void> delete(String orderId) async {
     await orders.doc(orderId).delete();
@@ -35,6 +48,19 @@ class _CartPageState extends State<CartPage> {
     );
   }
 
+  void navigateToPaymentGateway(
+      List<DocumentSnapshot> orders, double totalOrderValue) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => PaymentGatewayPage(
+          orders: orders,
+          totalOrderValue: totalOrderValue,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,9 +73,9 @@ class _CartPageState extends State<CartPage> {
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: orders
-        .where("Name", isEqualTo: globals.userName)
-        .orderBy("OrderDate")
-        .snapshots(),
+            .where("Name", isEqualTo: globals.userName)
+            .orderBy("OrderDate")
+            .snapshots(),
         builder: (context, streamSnapshot) {
           if (streamSnapshot.connectionState == ConnectionState.waiting) {
             return const Center(
@@ -66,10 +92,14 @@ class _CartPageState extends State<CartPage> {
             itemCount: ordersData.size,
             itemBuilder: (context, index) {
               final documentSnapshot = ordersData.docs[index];
-              final coffeeName = documentSnapshot['CoffeeName'] as String? ?? '';
-              final coffeePrice = documentSnapshot['CoffeePrice'] as String? ?? '';
-              final coffeeCount = documentSnapshot['CoffeeCount'] as int? ?? 0;
-              final coffeeImagePath = documentSnapshot['CoffeeImagePath'] as String? ?? '';
+              final coffeeName =
+                  documentSnapshot['CoffeeName'] as String? ?? '';
+              final coffeePrice =
+                  documentSnapshot['CoffeePrice'] as String? ?? '';
+              final coffeeCount =
+                  documentSnapshot['CoffeeCount'] as int? ?? 0;
+              final coffeeImagePath =
+                  documentSnapshot['CoffeeImagePath'] as String? ?? '';
 
               return Column(
                 children: [
@@ -92,14 +122,18 @@ class _CartPageState extends State<CartPage> {
                             child: Padding(
                               padding: const EdgeInsets.all(10.0),
                               child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.center,
                                 children: [
                                   Text(
                                     coffeeName,
-                                    style: const TextStyle(fontSize: 25),
+                                    style:
+                                        const TextStyle(fontSize: 25),
                                   ),
                                   const Text('with Almond milk'),
-                                  Text('\$$coffeePrice', style: const TextStyle(fontSize: 20))
+                                  Text('\$$coffeePrice',
+                                      style: const TextStyle(
+                                          fontSize: 20))
                                 ],
                               ),
                             ),
@@ -107,17 +141,22 @@ class _CartPageState extends State<CartPage> {
                           SizedBox(
                             width: 60,
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment:
+                                  CrossAxisAlignment.center,
+                              mainAxisAlignment:
+                                  MainAxisAlignment.center,
                               children: [
                                 Text(
                                   coffeeCount.toString(),
-                                  style: const TextStyle(fontSize: 22),
+                                  style: const TextStyle(
+                                      fontSize: 22),
                                 ),
                                 IconButton(
                                   color: Colors.orange,
-                                  onPressed: () => delete(documentSnapshot.id),
-                                  icon: const Icon(Icons.delete, size: 30),
+                                  onPressed: () =>
+                                      delete(documentSnapshot.id),
+                                  icon: const Icon(Icons.delete,
+                                      size: 30),
                                 ),
                               ],
                             ),
@@ -129,6 +168,31 @@ class _CartPageState extends State<CartPage> {
                 ],
               );
             },
+          );
+        },
+      ),
+      floatingActionButton: StreamBuilder<QuerySnapshot>(
+        stream: orders
+            .where("Name", isEqualTo: globals.userName)
+            .orderBy("OrderDate")
+            .snapshots(),
+        builder: (context, streamSnapshot) {
+          if (streamSnapshot.connectionState == ConnectionState.waiting) {
+            return const FloatingActionButton(
+              onPressed: null, // Disable the button during loading
+              backgroundColor: Colors.orange,
+              child: Icon(Icons.check_outlined),
+            );
+          }
+          final ordersData = streamSnapshot.data!;
+          final totalOrderValue = calculateTotalOrderValue(ordersData.docs);
+
+          return FloatingActionButton(
+            onPressed: () {
+              navigateToPaymentGateway(ordersData.docs, totalOrderValue);
+            },
+            backgroundColor: Colors.orange,
+            child: const Icon(Icons.check_outlined),
           );
         },
       ),
