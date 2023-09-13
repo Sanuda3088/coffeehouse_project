@@ -50,7 +50,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const Text(
-              'Enter Shipping Address:',
+              'Enter Delivery Address:',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 15,),

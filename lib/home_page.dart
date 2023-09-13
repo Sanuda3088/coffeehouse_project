@@ -9,7 +9,6 @@ import 'package:coffeehouse_project/welcome_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'coffee_tile.dart';
-
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -114,6 +113,7 @@ class _HomePageState extends State<HomePage> {
                   color: Colors.white,
                   fontSize: 35,
                   fontWeight: FontWeight.w500,
+                  
                 ),
               ),
             ),
@@ -228,10 +228,10 @@ class _HomePageState extends State<HomePage> {
                   children: const [
                     ArticleTile(
                         articleImagePath: 'lib/assets/coffee-oldin.png',
-                        articleName: 'Coffee Life', url: 'https://www.rush.edu/news/health-benefits-coffee',),
+                        articleName: 'Coffee Life Benefits', url: 'https://www.rush.edu/news/health-benefits-coffee',),
                     ArticleTile(
                         articleImagePath: 'lib/assets/istock.png',
-                        articleName: 'National Coffee day', url: 'https://www.daysoftheyear.com/days/coffee-day/',)
+                        articleName: 'World Coffee day', url: 'https://www.daysoftheyear.com/days/coffee-day/',)
                   ],
                 ),
               )),
