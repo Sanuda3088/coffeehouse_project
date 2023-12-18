@@ -1,22 +1,22 @@
 import 'package:coffeehouse_project/auth.dart';
-import 'package:coffeehouse_project/forgot_password_page.dart';
+import 'package:coffeehouse_project/home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'home_page.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class ResetPasswordPage extends StatefulWidget {
+  const ResetPasswordPage({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
-  _LoginPageState createState() => _LoginPageState();
+  State<ResetPasswordPage> createState() => _ResetPasswordPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _ResetPasswordPageState extends State<ResetPasswordPage> {
   String? errorMessage = '';
 
   final TextEditingController _controllerEmail = TextEditingController();
+  final TextEditingController _controllerOTP = TextEditingController();
   final TextEditingController _controllerPassword = TextEditingController();
+  final TextEditingController _controllerConfirmPassword = TextEditingController();
 
   Future signInWithEmailAndPassword(BuildContext context) async {
     try {
@@ -58,7 +58,7 @@ class _LoginPageState extends State<LoginPage> {
         Container(
           decoration: const BoxDecoration(
               image: DecorationImage(
-            image: AssetImage('lib/assets/login.png'),
+            image: AssetImage('lib/assets/forgotpwd.png'),
             fit: BoxFit.cover,
           )),
         ),
@@ -81,9 +81,9 @@ class _LoginPageState extends State<LoginPage> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 32, vertical: 8),
                       child: TextField(
-                        controller: _controllerEmail,
+                        controller: _controllerOTP,
                         decoration: InputDecoration(
-                          hintText: 'Email',
+                          hintText: 'OTP',
                           prefixIcon: const Icon(Icons.email),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30),
@@ -101,6 +101,21 @@ class _LoginPageState extends State<LoginPage> {
                         obscureText: true,
                         decoration: InputDecoration(
                           hintText: 'Password',
+                          prefixIcon: const Icon(Icons.password_sharp),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 32, vertical: 8),
+                      child: TextField(
+                        controller: _controllerConfirmPassword,
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          hintText: 'Confirm Password',
                           prefixIcon: const Icon(Icons.password_sharp),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30),
@@ -133,24 +148,6 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     const SizedBox(
                       height: 10,
-                    ),
-                    SizedBox(
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute<void>(
-                              builder: (BuildContext context) => const ForgotPassowrdPage(),),
-                          );
-                        },
-                        child: const Text(
-                          'Forgot Password?',
-                          style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black87,
-                      ),),
-                      ),
                     ),
                     const SizedBox(
                       height: 20,

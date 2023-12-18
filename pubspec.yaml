@@ -31,6 +31,8 @@ dependencies:
   expandable_text: ^2.3.0
   flutter:
     sdk: flutter
+  provider: ^6.0.5
+  google_maps_flutter: ^2.4.0
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -39,6 +41,8 @@ dependencies:
   firebase_auth: ^4.6.2
   firebase_core: ^2.13.1
   cloud_firestore: ^4.8.1
+  url_launcher: ^6.1.12
+  lottie: ^2.7.0
 
 dev_dependencies:
   flutter_test:
@@ -73,6 +77,10 @@ flutter:
   - lib/assets/istock.png
   - lib/assets/vector.png
   - lib/assets/login.png
+  - lib/assets/forgotpwd.png
+  - lib/assets/cofh.png
+  - lib/assets/ic.png
+  - lib/assets/lottie/WelcomePage_Animation.json
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

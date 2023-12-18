@@ -1,4 +1,8 @@
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expandable_text/expandable_text.dart';
+import 'package:flutter/material.dart';
+import 'package:coffeehouse_project/globals.dart'as globals;
 import 'package:flutter/material.dart';
 
 class DescriptionTile extends StatefulWidget {
@@ -7,12 +11,13 @@ class DescriptionTile extends StatefulWidget {
   final String coffeePrice;
   final String coffeedescription;
 
-  const DescriptionTile({super.key, 
+  const DescriptionTile({
+    Key? key,
     required this.coffeeImagePath,
     required this.coffeeName,
     required this.coffeePrice,
     required this.coffeedescription,
-  });
+  }) : super(key: key);
 
   @override
   State<DescriptionTile> createState() => _DescriptionTileState();
@@ -35,6 +40,39 @@ class _DescriptionTileState extends State<DescriptionTile> {
     });
   }
 
+  void placeOrder() {
+    final CollectionReference orders =
+        FirebaseFirestore.instance.collection('Orders');
+    DateTime now = DateTime.now();
+
+    orders.add({
+      'CoffeeName': widget.coffeeName,
+      'CoffeePrice': widget.coffeePrice,
+      'CoffeeCount': count,
+      'CoffeeImagePath': widget.coffeeImagePath,
+      'OrderDate': now,
+      'Name': globals.userName,
+    }).then((_) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Order Placed'),
+          content: const Text('Your order has been placed successfully.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+    }).catchError((error) {
+      print('Error placing order: $error');
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
@@ -49,26 +87,31 @@ class _DescriptionTileState extends State<DescriptionTile> {
               Container(
                 height: h * 0.5,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    image: DecorationImage(
-                        image: AssetImage(widget.coffeeImagePath),
-                        fit: BoxFit.cover)),
+                  borderRadius: BorderRadius.circular(20),
+                  image: DecorationImage(
+                    image: AssetImage(widget.coffeeImagePath),
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
               SizedBox(
                 height: h * 0.05,
               ),
               Container(
                 height: h * 0.1,
-                decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                ),
                 child: Column(
                   children: [
                     Text(
                       widget.coffeeName,
-                      style:
-                          const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                    const Text('with Almand Milk'),
+                    const Text('with Almond Milk'),
                   ],
                 ),
               ),
@@ -77,8 +120,9 @@ class _DescriptionTileState extends State<DescriptionTile> {
                 child: Container(
                   alignment: Alignment.topLeft,
                   height: h * 0.13,
-                  decoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
                   child: SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,7 +130,9 @@ class _DescriptionTileState extends State<DescriptionTile> {
                         const Text(
                           'Description',
                           style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         ExpandableText(
                           widget.coffeedescription,
@@ -109,7 +155,8 @@ class _DescriptionTileState extends State<DescriptionTile> {
                     width: w * 0.3,
                     height: h * 0.15,
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 10, right: 10, top: 20),
+                      padding:
+                          const EdgeInsets.only(left: 10, right: 10, top: 20),
                       child: Column(
                         children: [
                           const Text(
@@ -133,19 +180,23 @@ class _DescriptionTileState extends State<DescriptionTile> {
                     height: h * 0.15,
                     width: w * 0.45,
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 10, right: 10, top: 30, bottom: 30),
+                      padding: const EdgeInsets.only(
+                          left: 10, right: 10, top: 30, bottom: 30),
                       child: ElevatedButton(
                         style: ButtonStyle(
-                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          backgroundColor: MaterialStateProperty.all<Color>(Colors.orange),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(25),
                             ),
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: placeOrder,
                         child: const Text(
                           'Order',
                           style: TextStyle(
+                            color: Colors.black,
                             fontWeight: FontWeight.w500,
                             fontSize: 20,
                           ),
