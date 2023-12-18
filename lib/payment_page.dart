@@ -66,7 +66,7 @@ class _PaymentGatewayPageState extends State<PaymentGatewayPage> {
                 ),
               );
             },
-            child: const Text('Proceed to Payment',style: TextStyle(fontSize: 18),),
+            child: const Text('Proceed to Payment',style: TextStyle(fontSize: 18,color: Colors.white),),
           ),
           const SizedBox(height: 20,)
         ],

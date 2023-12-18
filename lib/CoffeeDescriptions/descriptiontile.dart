@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:coffeehouse_project/globals.dart'as globals;
+import 'package:flutter/material.dart';
 
 class DescriptionTile extends StatefulWidget {
   final String coffeeImagePath;
@@ -183,6 +184,7 @@ class _DescriptionTileState extends State<DescriptionTile> {
                           left: 10, right: 10, top: 30, bottom: 30),
                       child: ElevatedButton(
                         style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(Colors.orange),
                           shape:
                               MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
@@ -194,6 +196,7 @@ class _DescriptionTileState extends State<DescriptionTile> {
                         child: const Text(
                           'Order',
                           style: TextStyle(
+                            color: Colors.black,
                             fontWeight: FontWeight.w500,
                             fontSize: 20,
                           ),

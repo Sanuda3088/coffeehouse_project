@@ -9,6 +9,7 @@ import 'package:coffeehouse_project/welcome_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'coffee_tile.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -18,6 +19,17 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final FirebaseAuth auth = FirebaseAuth.instance;
+  User? user;
+  String userName = '';
+  
+  @override
+  void initState() {
+    super.initState();
+    user = FirebaseAuth.instance.currentUser;
+    // Move the initialization of userName inside the initState
+    userName = user?.displayName ?? 'User';
+  }
+  
   @override
   Widget build(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
@@ -42,18 +54,18 @@ class _HomePageState extends State<HomePage> {
       drawer: Drawer(
         child: ListView(
           children: [
-            const DrawerHeader(
+             DrawerHeader(
                 decoration:
-                    BoxDecoration(color: Color.fromARGB(255, 85, 58, 48)),
+                    const BoxDecoration(color: Color.fromARGB(255, 148, 85, 3)),
                 child: Row(
                   children: [
-                    Icon(Icons.person_3),
-                    SizedBox(
+                    const Icon(Icons.person_3),
+                    const SizedBox(
                       width: 25,
                     ),
                     Text(
-                      'Coffee house',
-                      style: TextStyle(fontSize: 20),
+                      'Hi! $userName',
+                      style: const TextStyle(fontSize: 20),
                     ),
                   ],
                 )),
@@ -69,7 +81,7 @@ class _HomePageState extends State<HomePage> {
                 );
               },
             ),
-             ListTile(
+            ListTile(
               title: const Text(
                 'about Us',
                 style: TextStyle(fontSize: 20),
@@ -113,7 +125,6 @@ class _HomePageState extends State<HomePage> {
                   color: Colors.white,
                   fontSize: 35,
                   fontWeight: FontWeight.w500,
-                  
                 ),
               ),
             ),
@@ -227,11 +238,15 @@ class _HomePageState extends State<HomePage> {
                   scrollDirection: Axis.horizontal,
                   children: const [
                     ArticleTile(
-                        articleImagePath: 'lib/assets/coffee-oldin.png',
-                        articleName: 'Coffee Life Benefits', url: 'https://www.rush.edu/news/health-benefits-coffee',),
+                      articleImagePath: 'lib/assets/coffee-oldin.png',
+                      articleName: 'Coffee Life Benefits',
+                      url: 'https://www.rush.edu/news/health-benefits-coffee',
+                    ),
                     ArticleTile(
-                        articleImagePath: 'lib/assets/istock.png',
-                        articleName: 'World Coffee day', url: 'https://www.daysoftheyear.com/days/coffee-day/',)
+                      articleImagePath: 'lib/assets/istock.png',
+                      articleName: 'World Coffee day',
+                      url: 'https://www.daysoftheyear.com/days/coffee-day/',
+                    )
                   ],
                 ),
               )),

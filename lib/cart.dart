@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:coffeehouse_project/globals.dart';
 import 'package:coffeehouse_project/payment_page.dart';
 import 'package:flutter/material.dart';
 import 'globals.dart' as globals;
@@ -73,7 +74,7 @@ class _CartPageState extends State<CartPage> {
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: orders
-            .where("Name", isEqualTo: globals.userName)
+            .where("Name", isEqualTo: userName)
             .orderBy("OrderDate")
             .snapshots(),
         builder: (context, streamSnapshot) {

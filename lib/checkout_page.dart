@@ -1,3 +1,4 @@
+import 'package:coffeehouse_project/home_page.dart';
 import 'package:flutter/material.dart';
 
 class CheckoutPage extends StatefulWidget {
@@ -29,6 +30,13 @@ class _CheckoutPageState extends State<CheckoutPage> {
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
                 Navigator.of(context).pop(); // Close the checkout page
+                //return to the homepage
+                Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (BuildContext context) => const HomePage(),
+                  ),
+                ); 
               },
               child: const Text('OK'),
             ),
@@ -53,7 +61,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
               'Enter Delivery Address:',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 15,),
+            const SizedBox(
+              height: 15,
+            ),
             TextField(
               controller: addressController,
               decoration: const InputDecoration(
@@ -80,12 +90,16 @@ class _CheckoutPageState extends State<CheckoutPage> {
               controller: cvvController,
               decoration: const InputDecoration(labelText: 'CVV'),
             ),
-            const SizedBox(height: 15,),
+            const SizedBox(
+              height: 15,
+            ),
             Text(
               'Total Bill: \$${widget.totalBill.toStringAsFixed(2)}',
               style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 15,),
+            const SizedBox(
+              height: 15,
+            ),
             ElevatedButton(
               onPressed: () {
                 // Simulate a successful payment
@@ -106,5 +120,3 @@ class _CheckoutPageState extends State<CheckoutPage> {
     );
   }
 }
-
-

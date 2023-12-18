@@ -2,7 +2,7 @@ import 'package:coffeehouse_project/auth.dart';
 import 'package:coffeehouse_project/home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'globals.dart' as globals;
+import 'package:coffeehouse_project/globals.dart' as globals;
 
 class SignupPage extends StatefulWidget {
   const SignupPage({Key? key}) : super(key: key);
@@ -21,14 +21,18 @@ class _SignupPageState extends State<SignupPage> {
     try {
       await Auth().createUserWithEmailAndPassword(
           email: _controllerEmail.text,
-          password: _controllerPassword.text,
-          name: _controllerName.text);
+          password: _controllerPassword.text,);
+
+      // Get the currently signed-in user
+      User? user = FirebaseAuth.instance.currentUser;
+
+      // Update the user's display name
+      await user?.updateDisplayName(_controllerName.text);
 
       globals.userName = _controllerName.text;
       //email verification
-      final user = FirebaseAuth.instance.currentUser;
       await user?.sendEmailVerification();
-      
+
       // ignore: use_build_context_synchronously
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => const HomePage()));
