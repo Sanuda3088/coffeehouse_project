@@ -81,7 +81,7 @@ class _DescriptionTileState extends State<DescriptionTile> {
       body: Container(
         color: Colors.black87,
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(6.0),
           child: Column(
             children: [
               Container(
@@ -147,13 +147,13 @@ class _DescriptionTileState extends State<DescriptionTile> {
                 ),
               ),
               const SizedBox(
-                height: 18,
+                height: 10,
               ),
               Row(
                 children: [
                   SizedBox(
                     width: w * 0.3,
-                    height: h * 0.15,
+                    height: h * 0.14,
                     child: Padding(
                       padding:
                           const EdgeInsets.only(left: 10, right: 10, top: 20),
@@ -206,7 +206,7 @@ class _DescriptionTileState extends State<DescriptionTile> {
                   ),
                   Container(
                     width: w * 0.1,
-                    height: h * 0.15,
+                    height: h * 0.16,
                     alignment: Alignment.centerRight,
                     child: Padding(
                       padding: const EdgeInsets.only(left: 17),

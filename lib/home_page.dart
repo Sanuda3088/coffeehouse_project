@@ -112,6 +112,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: SingleChildScrollView(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             const SizedBox(
               height: 10,
@@ -160,7 +161,7 @@ class _HomePageState extends State<HomePage> {
             Row(children: [
               Expanded(
                   child: SizedBox(
-                height: h * 0.4,
+                height: h * 0.44,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: [

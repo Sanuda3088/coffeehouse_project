@@ -145,6 +145,7 @@ class _SignupPageState extends State<SignupPage> {
                         child: const Text(
                           'Sign Up',
                           style: TextStyle(
+                            color: Colors.white,
                             fontSize: 22,
                             fontWeight: FontWeight.bold,
                           ),
