@@ -1,16 +1,18 @@
-# coffeehouse_project
+# **Coffee House App ☕️**
+Coffee House is a mobile application developed using Flutter and Firebase. It allows users to explore a variety of coffee options, place orders, and get a new experience. This README provides an overview of the app's features and other relevant information for developers and contributors.
 
-A new Flutter project.
+### **Features**
+User Authentication: Users can sign up, log in, and reset their passwords securely using Firebase Authentication.
+Coffee Menu: Browse through a wide selection of coffee options, including descriptions and prices.
+Order Placement: Place orders for your favourite coffee drinks directly from the app.
+Real-time Order Tracking: Track the status of your orders in real-time as they are being prepared and delivered.
+User Profile: Update personal information, view order history, and manage account settings.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+### **🤝 Contributing**
+Contributions are welcome! If you'd like to contribute to Coffee House, please follow these steps:
+Fork the repository
+Make your changes
+Push to the branch 
+Create a Pull Request
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
